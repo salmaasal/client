@@ -11,6 +11,7 @@ export default class Register extends Component {
       email: "",
       password: "",
       confirmPassword: "",
+      errors: [],
     };
     // state : its an object from the base class i.e. Component class to hold the data for our component.
   }
@@ -29,10 +30,19 @@ export default class Register extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
-    api.post('/users', this.state);
+
+    api.post('/users', this.state).then((res=> console.log(res.data))).catch((err) => {
+       this.setState({["errors"]: err.response.data.errors});
+       console.log(err.response.data);
+       });
+    //then: used to handle the success part
+    //catch: used to handle the failure part
     //it will accept the end point(URL0)
-    // the data 
-    //the headers 
+    //endpoint: /users
+    // the data: this.state
+    //the headers : already addedd in api.js optional for us beacuse api.js is working 
+
+
   };
 
   render() {
@@ -52,10 +62,10 @@ export default class Register extends Component {
                 type="text"
                 placeholder="Name"
                 name="name"
-                required
                 value={name}
                 onChange={this.onChange}
               />
+                <div>{this.state.errors.length != 0 && this.state.errors [0].msg}</div>
             </div>
             <div class="form-group">
               <input
@@ -65,6 +75,7 @@ export default class Register extends Component {
                 value={email}
                 onChange={this.onChange}
               />
+               <div>{this.state.errors.length != 0 && this.state.errors [1].msg}</div> 
               <small class="form-text">
                 This site uses Gravatar so if you want a profile image, use a
                 Gravatar email
@@ -79,6 +90,7 @@ export default class Register extends Component {
                 value={password}
                 onChange={this.onChange}
               />
+               <div>{this.state.errors.length != 0 && this.state.errors [2].msg}</div>
             </div>
             <div class="form-group">
               <input

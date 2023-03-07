@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import {Link } from 'react-router-dom'
 
-export default class Footer extends Component {
-  render() {
-    return (
-      <><h1>Hello from Footer</h1></>
-    )
-  }
+
+const Footer = () => {
+  return (
+    <>
+    <h4>&copy; &trade; www.eibfs.com</h4>
+    </>
+  )
 }
+
+export default Footer
 
